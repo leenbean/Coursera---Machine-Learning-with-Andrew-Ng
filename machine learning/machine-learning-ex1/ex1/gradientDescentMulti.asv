@@ -21,8 +21,18 @@ for iter = 1:num_iters
     
     S_sansX = X*theta-y;
     
-    theta = theta - (alpha/m) * (X'*S_sansX);
+    theta(1) = theta(1) - (alpha/m)*sum(S_sansX.*X(:,1));
     
+    theta(2) = theta(2) - (alpha/m)*sum(S_sansX.*X(:,2));
+    
+    theta = theta - (alpha/m) * S_
+    
+
+
+
+
+
+
 
 
     % ============================================================

@@ -81,9 +81,27 @@ J = J/m + ((lambda/(2*m))*(sum(sum(Theta1(:,(2:end)).^2))+sum(sum(Theta2(:,(2:en
 
 %------------- Back Propagation ------------
 
+for t=1:m
+a_1 = new_X(t,:); %aready includes bias
+z_2 = Theta1*a_1';
+a_2 = [1;sigmoid(z_2)];
+z_3 = Theta2*a_2;
+a_3 = sigmoid(z_3);
 
+d_3 = a_3' - new_y(t,:);
+d_2 = (Theta2'*d_3').*sigmoidGradient([1;z_2]);
 
+d_2 = d_2(2:end);
 
+Theta2_grad = Theta2_grad + d_3'*a_2';
+
+Theta1_grad = Theta1_grad + d_2*a_1;
+end
+
+Theta2_grad = Theta2_grad/m;
+Theta2_grad(:,(2:end)) = Theta2_grad(:,(2:end)) + (lambda/m)*Theta2(:,(2:end));
+Theta1_grad = Theta1_grad/m;
+Theta1_grad(:,(2:end)) = Theta1_grad(:,(2:end)) + (lambda/m)*Theta1(:,(2:end));
 
 % -------------------------------------------------------------
 
